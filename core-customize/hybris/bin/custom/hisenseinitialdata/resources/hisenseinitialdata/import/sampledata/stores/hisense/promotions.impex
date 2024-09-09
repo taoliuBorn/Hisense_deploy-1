@@ -1,0 +1,68 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Promotions for HISENSE Store
+#% impex.setLocale( Locale.GERMAN ); 
+
+$defaultPromoGrp=hisensePromoGrp
+$favCustomers=favoriteCustomers
+$bigSpenders=bigSpenders
+$productCatalog=hisenseProductCatalog
+$catalogVersion=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$productCatalog]),CatalogVersion.version[default=Online])[default=$productCatalog:Online]
+$regulargroup=regulargroup
+$defaultRuleGroup=couponPromotionRuleGroup
+$promotionsModule="promotions-module"
+$previewModule="promotions-preview-module"
+
+#### Order Discount ####
+INSERT PromotionPriceRow;&tresholdId;Currency(isocode);price
+
+INSERT PromotionPriceRow;&priceId;Currency(isocode);price
+
+INSERT_UPDATE OrderThresholdDiscountPromotion;PromotionGroup(Identifier[default=$defaultPromoGrp]);enabled[default=true,unique=true];code[unique=true];title;description;messageFired[lang=en];messageFired[lang=de];messageFired[lang=ja];messageFired[lang=zh];priority;thresholdTotals(&tresholdId);discountPrices(&priceId)
+
+INSERT_UPDATE PromotionUserRestriction;positive;promotion(code)[unique=true];users(uid)
+
+INSERT PromotionPriceRow;&tresholdId;Currency(isocode);price
+
+INSERT_UPDATE ProductPercentageDiscountPromotion;PromotionGroup(Identifier[default=$defaultPromoGrp]);enabled[default=true][unique=true];code[unique=true];title;description;percentageDiscount;priority;products(code,$catalogVersion)
+
+INSERT PromotionPriceRow;&priceId;Currency(isocode);price
+
+
+INSERT_UPDATE AcceleratorProductMultiBuyPromotion;PromotionGroup(Identifier[default=$defaultPromoGrp]);enabled[default=true][unique=true];code[unique=true];title;description;priority;categories(code,$catalogVersion);qualifyingCount;bundlePrices(&priceId)
+
+INSERT_UPDATE AcceleratorProductBOGOFPromotion;PromotionGroup(Identifier[default=$defaultPromoGrp]);enabled[default=true][unique=true];code[unique=true];title;description;priority;categories(code,$catalogVersion);qualifyingCount;freeCount
+
+INSERT PromotionPriceRow;&priceId;Currency(isocode);price
+
+
+INSERT_UPDATE ProductPerfectPartnerPromotion;PromotionGroup(Identifier[default=$defaultPromoGrp]);enabled[default=true][unique=true];code[unique=true];title;description;priority;products(code,$catalogVersion);partnerProducts(code,$catalogVersion);partnerPrices(&priceId)
+
+INSERT PromotionPriceRow;&priceId;Currency(isocode);price
+
+INSERT_UPDATE ProductBundlePromotion;PromotionGroup(Identifier[default=$defaultPromoGrp]);enabled[default=true,unique=true];code[unique=true];title;description;priority;products(code,$catalogVersion);bundlePrices(&priceId)
+
+INSERT_UPDATE PromotionVoucher;code[unique=true];currency(isocode);description;freeShipping;priority;redemptionQuantityLimitPerUser;redemptionQuantityLimit;value;voucherCode
+
+INSERT_UPDATE RuleGroup;code[unique=true]
+
+INSERT_UPDATE CodeGenerationConfiguration;name[unique=true];codeSeparator;
+
+INSERT_UPDATE SingleCodeCoupon;couponId(id)[unique=true];maxRedemptionsPerCustomer;maxTotalRedemptions;name[lang=en]
+
+
+INSERT_UPDATE MultiCodeCoupon;couponId(id)[unique=true];codeGenerationConfiguration(name);name[lang=en]
+
+
+INSERT_UPDATE PromotionSourceRuleTemplate;code[unique=true];maxAllowedRuns;ruleGroup(code);conditions;actions
+
+
+INSERT_UPDATE CustomerCoupon;couponId(id)[unique=true];startDate[default=01-05-2017,dateformat=dd-MM-yyyy];active[default=true];assignable[default=true]
+
+
+INSERT_UPDATE PromotionSourceRule;code[unique=true];priority;maxAllowedRuns;stackable[default=false];ruleGroup(code)[default=$defaultRuleGroup];conditions;actions;website(Identifier)[default=$defaultPromoGrp];excludeFromStorefrontDisplay[default=false];startDate[default=01-05-2017,dateformat=dd-MM-yyyy]
+
+
+INSERT_UPDATE PromotionSourceRuleTemplate;code[unique=true];maxAllowedRuns;ruleGroup(code)[default=$defaultRuleGroup];conditions;actions
+

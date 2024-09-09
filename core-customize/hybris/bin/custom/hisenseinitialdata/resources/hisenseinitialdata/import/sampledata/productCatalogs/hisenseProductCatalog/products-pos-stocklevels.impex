@@ -1,0 +1,23 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Importing Products Store Stock Levels into HISENSE Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog=hisenseProductCatalog
+$productCatalogName=Hisense Product Catalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$vendor=hisense
+
+
+# Create some Warehouses for the Vendor
+INSERT_UPDATE Warehouse;code[unique=true];vendor(code)[default=$vendor];default[default='false']
+;v1
+;v2
+
+
+
+INSERT_UPDATE StockLevel;available;warehouse(code)[default='v1',unique=true];inStockStatus(code)[default='notSpecified'];overSelling;preOrder;productCode[unique=true];reserved
+;8;;forceOutOfStock;0;0;p1;0
+;7;;forceOutOfStock;0;0;p2;0
+

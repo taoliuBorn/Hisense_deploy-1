@@ -1,0 +1,116 @@
+{
+  "commerceSuiteVersion": "2211",
+  "keepPriorPatchCount": "1",
+  "enableImageProcessingService": true,
+  "extensions": [
+    "hisensefulfilmentprocess",
+    "hisensebackoffice",
+    "hisensecore",
+    "hisensefacades",
+    "hisensestorefront",
+    "hisenseinitialdata"
+  ],
+  "useConfig": {
+    "properties": [
+      {
+        "location": "config/dev/local.properties",
+        "persona": "development"
+      },
+      {
+        "location": "config/stage/local.properties",
+        "persona": "staging"
+      },
+      {
+        "location": "config/prod/local.properties",
+        "persona": "production"
+      }
+    ],
+    "extensions": {
+      "location": "config/local/localextensions.xml"
+    }
+  },
+  "storefrontendAddons": [
+    {
+      "addon": "customerticketingaddon",
+      "storefront": "mycustomstorefront",
+      "template": "yacceleratorstorefront"
+    },
+    {
+      "addon": "smarteditaddon",
+      "storefront": "mycustomstorefront",
+      "template": "yacceleratorstorefront"
+    }
+  ],
+
+  "aspects": [
+    {
+      "name": "backoffice",
+      "webapps": [
+        {
+          "name": "backoffice",
+          "contextPath": "/backoffice"
+        }
+      ]
+    },
+    {
+      "name": "backgroundProcessing",
+      "webapps": [
+        {
+          "name": "hac",
+          "contextPath": "/hac"
+        },
+        {
+          "name": "mediaweb",
+          "contextPath": "/medias"
+        }
+      ]
+    },
+    {
+      "name": "accstorefront",
+      "properties": [
+        {
+          "key": "storefrontContextRoot",
+          "value": ""
+        }
+      ],
+      "webapps": [
+        {
+          "name": "hisensestorefront",
+          "contextPath": ""
+        },
+        {
+          "name": "mediaweb",
+          "contextPath": "/medias"
+        }
+      ]
+    },
+
+    {
+      "name": "api",
+      "properties": [
+        {
+          "key": "xss.filter.header.X-Frame-Options",
+          "value": ""
+        }
+      ],
+      "webapps": [
+        {
+          "name": "ycommercewebservices",
+          "contextPath": "/rest"
+        },
+        {
+          "name": "oauth2",
+          "contextPath": "/authorizationserver"
+        },
+        {
+          "name": "cmswebservices",
+          "contextPath": "/cmswebservices"
+        },
+        {
+          "name": "permissionswebservices",
+          "contextPath": "/permissionswebservices"
+        }
+      ]
+    }
+  ]
+}

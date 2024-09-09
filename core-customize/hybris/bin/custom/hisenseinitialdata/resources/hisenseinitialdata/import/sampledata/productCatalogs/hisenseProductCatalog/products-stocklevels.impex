@@ -1,0 +1,38 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Importing Products stock levels into HISENSE Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog=hisenseProductCatalog
+$productCatalogName=Hisense Product Catalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+INSERT_UPDATE Warehouse;code[unique=true];name[lang=en]
+;warehouse_s;Warehouse South;Warehouse South
+;warehouse_e;Warehouse East;Warehouse East
+;warehouse_w;Warehouse West;Warehouse West
+;warehouse_n;Warehouse North;Warehouse North
+
+INSERT_UPDATE StockLevel;available;warehouse(code)[unique=true];inStockStatus(code);maxPreOrder;maxStockLevelHistoryCount;overSelling;preOrder;productCode[unique=true];reserved
+;100;warehouse_s;forceInStock;0;0;0;0;p1;0
+;100;warehouse_e;forceInStock;0;0;0;0;p2;0
+;100;warehouse_w;forceInStock;1;0;0;0;p3;0
+;100;warehouse_n;forceInStock;1;0;0;0;p4;0
+;100;warehouse_s;forceInStock;1;0;0;0;p5;0
+;100;warehouse_s;forceInStock;1;0;0;0;p6;0
+;100;warehouse_s;forceInStock;1;0;0;0;p7;0
+;100;warehouse_s;forceInStock;1;0;0;0;p8;0
+
+
+UPDATE Product;code[unique=true];$catalogVersion;stockLevels(productCode,warehouse(code));vendors(code)
+;p1;;p1:warehouse_s;
+;p2;;p2:warehouse_e;
+;p3;;p3:warehouse_w;
+;p4;;p4:warehouse_n;
+;p5;;p5:warehouse_s;
+;p6;;p6:warehouse_s;
+;p7;;p7:warehouse_s;
+;p8;;p8:warehouse_s;
+
+

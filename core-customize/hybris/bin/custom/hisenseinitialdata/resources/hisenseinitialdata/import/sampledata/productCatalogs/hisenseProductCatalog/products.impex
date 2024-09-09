@@ -1,0 +1,39 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Importing Products into hisense Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog=hisenseProductCatalog
+$productCatalogName=hisense Product Catalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$supercategories=supercategories(code, $catalogVersion)
+$baseProduct=baseProduct(code,$catalogVersion)
+$approved=approvalstatus(code)[default='check']
+$lang=en
+
+
+
+INSERT_UPDATE Product;code[unique=true];$supercategories;manufacturerName;manufacturerAID;unit(code);ean;variantType(code);$catalogVersion;$approved
+                     ;p1;c1,c2;Hisense;Hisense;pieces;;;;
+                     ;p2;c2,c3;Hisense;Hisense;pieces;;;;
+                     ;p3;c3,c4;Hisense;Hisense;pieces;;;;
+                     ;p4;c4,c5;Hisense;Hisense;pieces;;;;
+                     ;p5;c1,c5;Hisense;Hisense;pieces;;;;
+                     ;p6;c2,c6;Hisense;Hisense;pieces;;;;
+                     ;p7;c3,c4;Hisense;Hisense;pieces;;;;
+                     ;p8;c4,c5;Hisense;Hisense;pieces;;;;
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,102 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for hisense Store
+#% impex.setLocale( Locale.GERMAN );
+
+$storeUid=hisense
+$productCatalog=hisenseProductCatalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$storeImage=storeImage(qualifier, $catalogVersion)
+
+
+$standardHours=hisense-standard-hours
+$weekendHours=hisense-weekend-hours
+
+INSERT_UPDATE OpeningSchedule;code[unique=true];
+                             ;$standardHours;
+                             ;$weekendHours;
+
+INSERT_UPDATE WeekdayOpeningDay;openingSchedule(code)[unique=true];dayOfWeek(code)[unique=true];openingTime[dateformat=hh:mm];closingTime[dateformat=hh:mm];
+                               ;$standardHours;MONDAY   ; 09:00; 20:00
+                               ;$standardHours;TUESDAY  ; 09:00; 20:00
+                               ;$standardHours;WEDNESDAY; 09:00; 20:00
+                               ;$standardHours;THURSDAY ; 09:00; 20:00
+                               ;$standardHours;FRIDAY   ; 09:00; 20:00
+                               ;$standardHours;SATURDAY ; 10:00; 20:00
+
+                               ;$weekendHours;MONDAY   ; 09:00; 20:00
+                               ;$weekendHours;TUESDAY  ; 09:00; 20:00
+                               ;$weekendHours;WEDNESDAY; 09:00; 20:00
+                               ;$weekendHours;THURSDAY ; 09:00; 20:00
+                               ;$weekendHours;FRIDAY   ; 09:00; 20:00
+                               ;$weekendHours;SATURDAY ; 10:00; 20:00
+                               ;$weekendHours;SUNDAY   ; 10:00; 16:00
+
+
+INSERT_UPDATE SpecialOpeningDay;openingSchedule(code)[unique=true];date[unique=true,dateformat=dd.MM.yyyy];closed;openingTime[dateformat=hh:mm];closingTime[dateformat=hh:mm]
+                               ;$standardHours; 01.01.2014 ;true
+                               ;$standardHours; 14.01.2014 ;true
+                               ;$standardHours; 11.02.2014 ;true
+                               ;$standardHours; 20.03.2014 ;true
+                               ;$standardHours; 29.04.2014 ;true
+                               ;$standardHours; 03.05.2014 ;true
+                               ;$standardHours; 04.05.2014 ;true
+                               ;$standardHours; 05.05.2014 ;true
+                               ;$standardHours; 15.07.2014 ;true
+                               ;$standardHours; 16.09.2014 ;true
+                               ;$standardHours; 23.09.2014 ;true
+                               ;$standardHours; 14.10.2014 ;true
+                               ;$standardHours; 03.11.2014 ;true
+                               ;$standardHours; 23.11.2014 ;true
+                               ;$standardHours; 23.12.2014 ;true
+
+                               ;$weekendHours; 01.01.2014 ;true
+                               ;$weekendHours; 14.01.2014 ;true
+                               ;$weekendHours; 11.02.2014 ;true
+                               ;$weekendHours; 20.03.2014 ;true
+                               ;$weekendHours; 29.04.2014 ;true
+                               ;$weekendHours; 03.05.2014 ;true
+                               ;$weekendHours; 04.05.2014 ;true
+                               ;$weekendHours; 05.05.2014 ;true
+                               ;$weekendHours; 15.07.2014 ;true
+                               ;$weekendHours; 16.09.2014 ;true
+                               ;$weekendHours; 23.09.2014 ;true
+                               ;$weekendHours; 14.10.2014 ;true
+                               ;$weekendHours; 03.11.2014 ;true
+                               ;$weekendHours; 23.11.2014 ;true
+                               ;$weekendHours; 23.12.2014 ;true
+
+
+INSERT_UPDATE PointOfService;name[unique=true];type(code);address(&addrID);latitude;longitude;geocodeTimestamp[dateformat=dd-MM-yyyy];$storeImage;openingSchedule(code);basestore(uid)[default=$storeUid];features(code)
+                            ;JB HIFI - Sydney;STORE;addr1;-33,87231606181711;151,20721476958718;01-01-2024;hisense_store_01;$standardHours
+                            ;JB HIFI - Surry Hills;STORE;addr2;-33,878415683120295; 151,2136799677362;01-01-2024;hisense_store_02;$standardHours
+                            ;JB HIFI - Richmond;STORE;addr3;-37,812887276820774; 145,00981292559194;01-01-2024;;$standardHours
+                            ;David Jones;STORE;addr4;-33,87024359354672; 151,20965065239233;01-01-2024;hisense_store_01;$weekendHours
+                            ;Bing Lee;STORE;addr5;-33,87980392980488; 151,20546095609495;01-01-2024;;$standardHours
+
+
+
+INSERT_UPDATE Address;&addrID;streetname;streetnumber;postalcode[unique=true];town[unique=true];country(isocode);region(isocode);phone1;owner(PointOfService.name)[unique=true]
+                     ;addr1;GEORGE STREET;500;2000;SYDNEY;AU;;+81 1988 3600;JB HIFI - Sydney
+                     ;addr2;OXFORD STREET;55-73;2010;SURRY HILLS;AU;;+81 4649 8891;JB HIFI - Surry Hills
+                     ;addr3;VICTORIA ST;620;3121;RICHMOND;AU;;+81 6176 3426;JB HIFI - Richmond
+                     ;addr4;CASTLEREAGH STREET;86-108;2000;SYDNEY;AU;;+81 4376 5760;David Jones
+                     ;addr5;GEORGE STREET;746-748;2000;HAYMARKET;AU;;+81 3519 4163;Bing Lee
+
+
+
+INSERT_UPDATE StoreLocatorFeature;code[unique=true]
+
+
+UPDATE PointOfService;name[unique=true];features(code);
+
+
+
+INSERT_UPDATE PoS2WarehouseRel;source(name)[unique=true];target(code)[unique=true]
+                              ;JB HIFI - Sydney;warehouse_e
+                              ;JB HIFI - Surry Hills;warehouse_e
+                              ;JB HIFI - Richmond;warehouse_w
+                              ;David Jones;warehouse_w
+                              ;Bing Lee;warehouse_n
+

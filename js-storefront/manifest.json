@@ -1,0 +1,16 @@
+{
+  "applications": [
+    {
+      "name": "hisense-jsstorefront",
+      "path": "hisense-jsstorefront",
+      "ssr": {
+        "enabled": false,
+        "path": "dist/hisense-jsstorefront/server/main.js"
+      },
+      "crs": {
+        "webrrot": "dist/hisense-jsstorefront"
+      }
+    }
+  ],
+  "nodeVersion": "16"
+}

@@ -1,0 +1,27 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#******************************This file is generated - please do not edit it. It will be regenerated after every build.********************************#
+# ImpEx for Importing Categories into Hisense Store
+
+# Macros / Replacement Parameter definitions
+$productCatalog=hisenseProductCatalog
+$productCatalogName=Hisense Product Catalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+
+# Language
+$lang=en
+
+
+# Create Categories
+UPDATE Category;code[unique=true];$catalogVersion;name[lang=$lang]
+;1;;hisenseCategory
+;c1;;TV & ENTERTAINMENT
+;c2;;Television
+;c3;;HOME APPLIANCES
+;c4;;Fridges
+;c5;;Air Conitioning
+;c6;;Washers
+
+

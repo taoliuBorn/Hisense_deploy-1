@@ -1,0 +1,11 @@
+#Ant properties
+#Tue Feb 06 03:52:07 CET 2024
+version.api=2211
+vendor=hybris
+group.id=de.hybris.platform
+name=hisensetest
+description=hisensetest
+builddate=20240206 0345
+releasedate=20231219 1842
+version=2211.19
+module.name=platform-module

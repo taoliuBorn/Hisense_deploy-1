@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="items.xsd">
+
+    <collectiontypes>
+        <collectiontype code="GenderList" elementtype="Gender" autocreate="true" generate="true" type="list"/>
+        <collectiontype code="SwatchColorSet" elementtype="SwatchColorEnum" autocreate="true" generate="true"
+                        type="set"/>
+        <collectiontype elementtype="java.lang.String" code="ScreenSize" autocreate="true" generate="false" type="set" />
+    </collectiontypes>
+
+    <enumtypes>
+        <enumtype generate="true" code="SwatchColorEnum" autocreate="true" dynamic="true">
+            <value code="BLACK"/>
+            <value code="BLUE"/>
+            <value code="BROWN"/>
+            <value code="GREEN"/>
+            <value code="GREY"/>
+            <value code="ORANGE"/>
+            <value code="PINK"/>
+            <value code="PURPLE"/>
+            <value code="RED"/>
+            <value code="SILVER"/>
+            <value code="WHITE"/>
+            <value code="YELLOW"/>
+        </enumtype>
+    </enumtypes>
+
+    <relations>
+        <relation code="BannersForAdImgComponent" generate="true" localized="false" autocreate="true">
+            <deployment table="BannForAdImgCompRels" typecode="13000" />
+            <sourceElement qualifier="adImgComponent" type="AdImagesComponent" cardinality="many">
+                <modifiers read="true" write="true" search="true" optional="true" />
+            </sourceElement>
+            <targetElement qualifier="banners" type="BannerComponent" cardinality="many" collectiontype="list" ordered="true">
+                <modifiers read="true" write="true" search="true" optional="true" />
+            </targetElement>
+        </relation>
+    </relations>
+
+    <itemtypes>
+
+        <!-- Add your item definitions here -->
+
+        <typegroup name="Product">
+            <itemtype code="Product" autocreate="false" generate="false">
+                <attributes>
+                    <attribute qualifier="productType" type="java.lang.String">
+                        <persistence type="property"/>
+                        <modifiers read="true" write="true" search="true" optional="true" />
+                    </attribute>
+                    <attribute qualifier="screenSet" type="ScreenSize">
+                        <persistence type="property"/>
+                        <modifiers read="true" write="true" search="true" optional="true" />
+                    </attribute>
+                    <attribute qualifier="year" type="java.lang.String">
+                        <persistence type="property"/>
+                        <modifiers read="true" write="true" search="true" optional="true" />
+                    </attribute>
+                </attributes>
+            </itemtype>
+        </typegroup>
+
+
+        <!-- TypeGroups are for structure of this file only -->
+
+        <typegroup name="Hisense">
+            <itemtype code="HisenseColorVariantProduct" extends="VariantProduct"
+                      autocreate="true" generate="true"
+                      jaloclass="com.hisense.core.jalo.HisenseColorVariantProduct">
+                <description>Hisense color variant type that contains additional attribute describing variant color.
+                </description>
+                <attributes>
+                    <attribute qualifier="color" type="localized:java.lang.String"
+                               metatype="VariantAttributeDescriptor">
+                        <description>Color of the product.</description>
+                        <modifiers/>
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+        </typegroup>
+
+        <typegroup name="Hisense">
+            <itemtype code="HisenseSizeVariantProduct" extends="VariantProduct"
+                      autocreate="true" generate="true"
+                      jaloclass="com.hisense.core.jalo.HisenseSizeVariantProduct">
+                <description>Hisense color size type that contains additional attribute describing variant color.
+                </description>
+                <attributes>
+                    <attribute qualifier="size" type="localized:java.lang.String"
+                               metatype="VariantAttributeDescriptor">
+                        <description>Size of the product.</description>
+                        <modifiers/>
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+        </typegroup>
+
+        <typegroup name="Hisense">
+        <itemtype code="AdImagesComponent" generate="true" extends="SimpleCMSComponent" autocreate="true"
+                  jaloclass="de.hybris.platform.cms2lib.components.AdImagesComponent">
+            <attributes>
+
+            </attributes>
+        </itemtype>
+        </typegroup>
+
+    </itemtypes>
+</items>

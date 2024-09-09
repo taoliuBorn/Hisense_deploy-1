@@ -1,0 +1,33 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# ImpEx for Importing HISENSE Store Prices
+#% impex.setLocale( Locale.GERMAN ); 
+
+$productCatalog=hisenseProductCatalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default='$productCatalog:Staged']
+$taxGroup=Europe1PriceFactory_PTG(code)[default=au-sales-tax-full]
+
+# Set product approval status to Approved only for those products that have prices.
+$approved=approvalstatus(code)[default='approved']
+
+UPDATE Product;code[unique=true];$approved;$catalogVersion;$taxGroup
+;p1
+;p2
+;p3
+;p4
+;p5
+;p6
+;p7
+;p8
+
+INSERT_UPDATE PriceRow;productId[unique=true];unit(code[unique=true,default=pieces]);currency(isocode)[unique=true];price;minqtd;unitFactor;net
+;p1;pieces;AUD;99;1;1;false
+;p2;pieces;AUD;199;1;1;false
+;p3;pieces;AUD;299;1;1;false
+;p4;pieces;AUD;399;1;1;false
+;p5;pieces;AUD;499;1;1;false
+;p6;pieces;AUD;599;1;1;false
+;p7;pieces;AUD;699;1;1;false
+;p8;pieces;AUD;799;1;1;false
+
